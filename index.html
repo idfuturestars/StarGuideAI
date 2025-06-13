@@ -1,2 +1,427 @@
-<script src="auth.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDFS StarGuide - AI-Powered Learning Platform</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">🌟</div>
+            <h2>StarGuide</h2>
+            <p>Launching your journey to the stars...</p>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <div class="logo-star">🌟</div>
+                <h1>Welcome to StarGuide</h1>
+                <p class="auth-subtitle">Your AI-powered learning companion for the journey to the stars</p>
+            </div>
+            
+            <div class="auth-form">
+                <h3>Ready to explore?</h3>
+                <p>Join thousands of students already reaching for the stars with personalized AI tutoring.</p>
+                
+                <button id="demo-login-btn" class="btn btn-primary btn-large">
+                    🚀 Start Learning Journey
+                </button>
+                
+                <div class="auth-features">
+                    <div class="feature">
+                        <span class="feature-icon">🤖</span>
+                        <span>AI Tutoring</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">⚔️</span>
+                        <span>Battle Arena</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🏆</span>
+                        <span>Achievements</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="app-container hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-star">🌟</span>
+                    <span class="logo-text">StarGuide</span>
+                </div>
+                
+                <div class="header-center">
+                    <div class="user-stats">
+                        <div class="stat">
+                            <span class="stat-icon">⚡</span>
+                            <span id="user-xp">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🔥</span>
+                            <span id="user-streak">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">💎</span>
+                            <span id="user-level">1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button id="settings-btn" class="btn btn-icon" title="Settings">⚙️</button>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="app-nav">
+            <div class="nav-content">
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </button>
+                <button class="nav-item" data-view="assessments">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Assessments</span>
+                </button>
+                <button class="nav-item" data-view="ai-tutor">
+                    <span class="nav-icon">🤖</span>
+                    <span class="nav-text">AI Tutor</span>
+                </button>
+                <button class="nav-item" data-view="battles">
+                    <span class="nav-icon">⚔️</span>
+                    <span class="nav-text">Battles</span>
+                </button>
+                <button class="nav-item" data-view="quests">
+                    <span class="nav-icon">🗺️</span>
+                    <span class="nav-text">Quests</span>
+                </button>
+                <button class="nav-item" data-view="pods">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Learning Pods</span>
+                </button>
+                <button class="nav-item" data-view="achievements">
+                    <span class="nav-icon">🏆</span>
+                    <span class="nav-text">Achievements</span>
+                </button>
+                <button class="nav-item" data-view="analytics">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Analytics</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div id="main-content" class="main-content">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- Achievement Notification Template -->
+    <div id="achievement-template" class="achievement-notification hidden">
+        <div class="achievement-popup">
+            <div class="achievement-header">
+                <span class="achievement-unlocked">🎉 Achievement Unlocked!</span>
+            </div>
+            <div class="achievement-content">
+                <span class="achievement-icon-large"></span>
+                <div class="achievement-details">
+                    <h4></h4>
+                    <p></p>
+                    <p class="achievement-xp"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading all JavaScript modules -->
+    <script src="/static/config.js"></script>
+    <script src="/static/utils.js"></script>
+    <script src="/static/auth.js"></script>
+    <script src="/static/navigation.js"></script>
+    <script src="/static/assessments.js"></script>
+    <script src="/static/ai-chat.js"></script>
+    <script src="/static/battles.js"></script>
+    <script src="/static/quests.js"></script>
+    <script src="/static/pods.js"></script>
+    <script src="/static/achievements.js"></script>
+    <script src="/static/analytics.js"></script>
+    <script src="/static/profile-setup.js"></script>
+    <script src="/static/vision.js"></script>
+
+    <!-- Main Application Script -->
+    <script>
+        // Global StarGuide Application
+        window.StarGuideApp = {
+            user: null,
+            settings: {
+                theme: 'dark',
+                notifications: true,
+                soundEffects: true,
+                autoSave: true
+            },
+
+            // Initialize the application
+            async init() {
+                console.log('🌟 StarGuide Application Starting...');
+                
+                try {
+                    // Hide loading screen after a short delay
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').classList.add('hidden');
+                        document.getElementById('auth-screen').classList.remove('hidden');
+                    }, 2000);
+
+                    // Initialize all modules
+                    this.initializeModules();
+                    this.setupEventListeners();
+                    this.loadSettings();
+
+                    console.log('✅ StarGuide Application Ready!');
+                } catch (error) {
+                    console.error('❌ Application initialization failed:', error);
+                    this.showNotification('Application failed to start. Please refresh the page.', 'error');
+                }
+            },
+
+            // Initialize all modules
+            initializeModules() {
+                // Initialize modules in order
+                if (window.StarGuideConfig) window.StarGuideConfig.init();
+                if (window.StarGuideUtils) window.StarGuideUtils.init();
+                if (window.StarGuideAuth) window.StarGuideAuth.init();
+                if (window.StarGuideNavigation) window.StarGuideNavigation.init();
+                if (window.StarGuideAssessments) window.StarGuideAssessments.init();
+                if (window.StarGuideAIChat) window.StarGuideAIChat.init();
+                if (window.StarGuideBattles) window.StarGuideBattles.init();
+                if (window.StarGuideQuests) window.StarGuideQuests.init();
+                if (window.StarGuidePods) window.StarGuidePods.init();
+                if (window.StarGuideAchievements) window.StarGuideAchievements.init();
+                if (window.StarGuideAnalytics) window.StarGuideAnalytics.init();
+                if (window.StarGuideProfileSetup) window.StarGuideProfileSetup.init();
+                if (window.StarGuideVision) window.StarGuideVision.init();
+            },
+
+            // Setup global event listeners
+            setupEventListeners() {
+                // Demo login button
+                document.getElementById('demo-login-btn')?.addEventListener('click', () => {
+                    if (window.StarGuideAuth) {
+                        window.StarGuideAuth.demoLogin();
+                    }
+                });
+
+                // Logout button
+                document.getElementById('logout-btn')?.addEventListener('click', () => {
+                    if (window.StarGuideAuth) {
+                        window.StarGuideAuth.logout();
+                    }
+                });
+
+                // Settings button
+                document.getElementById('settings-btn')?.addEventListener('click', () => {
+                    if (window.StarGuideNavigation) {
+                        window.StarGuideNavigation.navigateTo('settings');
+                    }
+                });
+
+                // Navigation items
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const view = item.dataset.view;
+                        if (view && window.StarGuideNavigation) {
+                            window.StarGuideNavigation.navigateTo(view);
+                        }
+                    });
+                });
+            },
+
+            // User management
+            setUser(userData) {
+                this.user = userData;
+                this.updateUserDisplay();
+                
+                // Store in localStorage for persistence
+                localStorage.setItem('starguide_user', JSON.stringify(userData));
+                
+                // Show main app
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                
+                // Navigate to dashboard
+                if (window.StarGuideNavigation) {
+                    window.StarGuideNavigation.navigateTo('dashboard');
+                }
+            },
+
+            getUser() {
+                if (!this.user) {
+                    const stored = localStorage.getItem('starguide_user');
+                    if (stored) {
+                        this.user = JSON.parse(stored);
+                    }
+                }
+                return this.user;
+            },
+
+            updateUserDisplay() {
+                if (!this.user) return;
+
+                const xpElement = document.getElementById('user-xp');
+                const streakElement = document.getElementById('user-streak');
+                const levelElement = document.getElementById('user-level');
+
+                if (xpElement) xpElement.textContent = this.user.xp || 0;
+                if (streakElement) streakElement.textContent = this.user.streak || 0;
+                if (levelElement) levelElement.textContent = this.user.level || 1;
+            },
+
+            // XP and Level Management
+            addXP(amount) {
+                if (!this.user) return;
+
+                const oldLevel = this.user.level;
+                this.user.xp += amount;
+                
+                // Calculate new level (100 XP per level)
+                const newLevel = Math.floor(this.user.xp / 100) + 1;
+                
+                if (newLevel > oldLevel) {
+                    this.user.level = newLevel;
+                    this.showNotification(`🎉 Level Up! You're now level ${newLevel}!`, 'success');
+                    
+                    // Check for level-based achievements
+                    if (window.StarGuideAchievements) {
+                        window.StarGuideAchievements.checkAchievements('level_up', { level: newLevel });
+                    }
+                }
+
+                this.updateUserDisplay();
+                this.saveUserData();
+            },
+
+            // Settings management
+            loadSettings() {
+                const saved = localStorage.getItem('starguide_settings');
+                if (saved) {
+                    this.settings = { ...this.settings, ...JSON.parse(saved) };
+                }
+                this.applySettings();
+            },
+
+            saveSettings() {
+                localStorage.setItem('starguide_settings', JSON.stringify(this.settings));
+                this.applySettings();
+            },
+
+            applySettings() {
+                // Apply theme
+                document.body.className = this.settings.theme === 'light' ? 'light-theme' : 'dark-theme';
+                
+                // Apply other settings as needed
+                if (!this.settings.soundEffects) {
+                    // Disable sound effects
+                }
+            },
+
+            // Save user data
+            saveUserData() {
+                if (this.user) {
+                    localStorage.setItem('starguide_user', JSON.stringify(this.user));
+                }
+            },
+
+            // Notification system
+            showNotification(message, type = 'info', duration = 4000) {
+                const container = document.getElementById('notification-container');
+                if (!container) return;
+
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <span class="notification-message">${message}</span>
+                        <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                `;
+
+                container.appendChild(notification);
+
+                // Auto remove after duration
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, duration);
+            },
+
+            // Utility methods
+            formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            },
+
+            formatDate(date) {
+                return new Date(date).toLocaleDateString();
+            },
+
+            getTimeOfDay() {
+                const hour = new Date().getHours();
+                if (hour < 12) return 'morning';
+                if (hour < 17) return 'afternoon';
+                return 'evening';
+            }
+        };
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.StarGuideApp.init();
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && window.StarGuideApp.user) {
+                // Page became visible, check for updates
+                if (window.StarGuideAnalytics) {
+                    window.StarGuideAnalytics.trackEvent('page_visible');
+                }
+            }
+        });
+
+        // Handle before unload
+        window.addEventListener('beforeunload', () => {
+            if (window.StarGuideApp.user) {
+                window.StarGuideApp.saveUserData();
+            }
+        });
+    </script>
+</body>
+</html>
+</script>
+    <script src="auth.js"></script>
     <script src="profile-setup.js"></script>
+</body>
+</html>
