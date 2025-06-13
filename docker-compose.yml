@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - JWT_SECRET=your-jwt-secret-key
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./data:/app/data
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  database:
+    image: alpine:latest
+    volumes:
+      - ./data:/data
+    command: ['sh', '-c', 'mkdir -p /data && tail -f /dev/null']
+
+volumes:
+  data:
